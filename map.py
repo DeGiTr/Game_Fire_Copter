@@ -1,18 +1,32 @@
-﻿# 0 - поле
+﻿from utils import randbool, randcell, randcell2
+# 0 - поле
 # 1 - дерево
 # 2 - река
 # 3 - госпиталь
 # 4 - апгрейд-шоп
 
-CELL_TYPES = "🟨🌲🌊🏥🏦"
+CELL_TYPES = "🟨🌲〰️🏥🏦"
 
 class Map:
-    
-    #def generate_rivers(): # Генератор рек
+    def generate_river(self, l): # Генератор рек
+        rc = randcell(self.w, self.h)
+        rx, ry = rc[0], rc[1]
+        self.cells[rx][ry] = 2
+        while l > 0:
+            rc2 = randcell2(rx, ry)
+            rx2, ry2 = rc2[0], rc2[1]
+            if (self.check_bounds(rx2, ry2)):
+                self.cells[rx2][ry2] = 2
+                rx, ry = rx2, ry2
+                l -= 1
 
-    #def generate_forest(): # Генератор леса
+    def generate_forest(self, r, mxr): # Генератор леса
+        for ri in range(self.h):
+            for ci in range(self.w):
+                if randbool(r, mxr):
+                    self.cells[ri][ci] = 1
 
-    def print_map(self):
+    def print_map(self): # Генератор игрового поля
         print("⬛" * (self.w + 2))
         for row in self.cells:
             print("⬛", end="")
@@ -31,7 +45,3 @@ class Map:
         self.w = w
         self.h = h
         self.cells = [[0 for i in range(w)] for j in range(h)]
-
-tmp = Map(29, 10)
-tmp.cells[1][1] = 2
-tmp.print_map()
