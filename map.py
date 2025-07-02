@@ -4,10 +4,31 @@
 # 2 - река
 # 3 - госпиталь
 # 4 - апгрейд-шоп
+# 5 - огонь
 
-CELL_TYPES = "🟨🌲〰️🏥🏦"
+CELL_TYPES = "🟨🌲🌊🏥🏦🔥"
 
 class Map:
+    def __init__(self, w, h):
+        self.w = w
+        self.h = h
+        self.cells = [[0 for i in range(w)] for j in range(h)]
+
+    def check_bounds(self, x, y):
+        if (x < 0 or y < 0 or x >= self.h or y >= self.w):
+            return False
+        return True
+
+    def print_map(self): # Генератор игрового поля
+        print("⬛" * (self.w + 2))
+        for row in self.cells:
+            print("⬛", end="")
+            for cell in row:
+                if (cell >= 0 and cell < len(CELL_TYPES)):
+                    print(CELL_TYPES[cell], end = "")
+            print("⬛")
+        print("⬛" * (self.w + 2))
+
     def generate_river(self, l): # Генератор рек
         rc = randcell(self.w, self.h)
         rx, ry = rc[0], rc[1]
@@ -26,22 +47,27 @@ class Map:
                 if randbool(r, mxr):
                     self.cells[ri][ci] = 1
 
-    def print_map(self): # Генератор игрового поля
-        print("⬛" * (self.w + 2))
-        for row in self.cells:
-            print("⬛", end="")
-            for cell in row:
-                if (cell >= 0 and cell < len(CELL_TYPES)):
-                    print(CELL_TYPES[cell], end = "")
-            print("⬛")
-        print("⬛" * (self.w + 2))
-            
-    def check_bounds(self, x, y):
-        if (x < 0 or y < 0 or x >= self.h or y >= self.w):
-            return False
-        return True
+    def generate_tree(self): # Обновление леса
+        c = randcell(self.w, self.h)
+        cx, cy = c[0], c[1]
+        if self.cells[cx][cy] == 0:
+            self.cells[cx][cy] = 1
+     
+    def add_fire(self): # Появление пожара
+        c = randcell(self.w, self.h)
+        cx, cy = c[0], c[1]
+        if self.cells[cx][cy] == 1:
+            self.cells[cx][cy] = 5
 
-    def __init__(self, w, h):
-        self.w = w
-        self.h = h
-        self.cells = [[0 for i in range(w)] for j in range(h)]
+    def update_fires(self): # Удаление пожара и добавление нового
+        for ri in range(self.h):
+            for ci in range(self.w):
+                cell = self.cells[ri][ci]
+                if cell == 5:
+                    self.cells[ri][ci] = 0
+        for i in range(10):
+            self.add_fire()
+
+
+
+

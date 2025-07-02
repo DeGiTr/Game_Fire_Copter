@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b2d375ae-e4ec-43d8-85f5-02589d50af0a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>map.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,6 @@
   <ItemGroup>
     <Compile Include="clouds.py" />
     <Compile Include="exporter.py" />
-    <Compile Include="fires.py" />
     <Compile Include="helicopter.py" />
     <Compile Include="importer.py" />
     <Compile Include="main.py" />
