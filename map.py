@@ -19,13 +19,16 @@ class Map:
             return False
         return True
 
-    def print_map(self): # Генератор игрового поля
+    def print_map(self, helico): # Генератор игрового поля
         print("⬛" * (self.w + 2))
-        for row in self.cells:
+        for ri in range(self.h):
             print("⬛", end="")
-            for cell in row:
-                if (cell >= 0 and cell < len(CELL_TYPES)):
-                    print(CELL_TYPES[cell], end = "")
+            for ci in range(self.w):
+                cell = self.cells[ri][ci]
+                if (helico.x == ri and helico.y == ci):
+                    print("🚁", end="")
+                elif (cell >= 0 and cell < len(CELL_TYPES)):
+                    print(CELL_TYPES[cell], end="")
             print("⬛")
         print("⬛" * (self.w + 2))
 
