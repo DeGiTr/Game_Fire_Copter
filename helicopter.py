@@ -1,5 +1,6 @@
 ﻿# Тут будут храниться данные о вертолете: жизни, ведра, позиция и др.
 from utils import randcell
+import os
 
 
 class Helicopter:
@@ -13,7 +14,7 @@ class Helicopter:
         self.tank = 0
         self.mxtank = 1
         self.score = 0
-        self.lives = 2
+        self.lives = 20
 
 
     def move(self, dx, dy):
@@ -25,3 +26,18 @@ class Helicopter:
         print("💧", self.tank, "/", self.mxtank, sep="", end = " | ")
         print("🏆", self.score, end = " | ")
         print("🖤", self.lives)
+
+    def game_over(self):
+        global helico
+        os.system("cls")
+        print("============================")
+        print("   GAME OVER!   ")
+        print(f"Ваш итоговый счет: {self.score}")
+        print("============================")
+        exit(0)
+
+    def export_data(self):
+        return {"score": self.score,
+                "lives": self.lives,
+                "x": self.x, "y": self.y,
+                "tank": self.tank, "mxtank": self.mxtank}

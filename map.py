@@ -1,4 +1,6 @@
 ﻿from utils import randbool, randcell, randcell2
+import os
+
 # 0 - поле
 # 1 - дерево
 # 2 - река
@@ -11,8 +13,7 @@ CELL_TYPES = "🟨🌲🌊🏥🏦🔥"
 TREE_BONUS = 100
 UPGRADE_COST = 5000
 
-# TODO: make: 10000
-LIFE_COST = 100
+LIFE_COST = 10000
 
 class Map:
     def __init__(self, w, h):
@@ -100,8 +101,9 @@ class Map:
         for i in range(10):
             self.add_fire()
 
-    def process_helicopter(self, helico):
+    def process_helicopter(self, helico, clouds):
         c = self.cells[helico.x][helico.y]
+        d = clouds.cells[helico.x][helico.y]
         if (c == 2):
             helico.tank = helico.mxtank
         if (c == 5 and helico.tank > 0):
@@ -112,5 +114,12 @@ class Map:
             helico.mxtank += 1
             helico.score -= UPGRADE_COST
         if (c == 3 and helico.score >= LIFE_COST):
-            helico.lives += 1
+            helico.lives += 10
             helico.score -= LIFE_COST
+        if (d == 2):
+            helico.lives -= 1
+            if (helico.lives == 0):
+                helico.game_over()
+
+    def export_data(self):
+        return {"cells": self.cells}
