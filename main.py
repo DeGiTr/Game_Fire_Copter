@@ -1,22 +1,22 @@
-﻿# print("🌲🌳🌊〰️🔥🚁🗲🏥✚🏦🟩🟥🟧⬛🟦🟨🟪🟫🖤🤍💛💧🪣☁🏆")
+﻿# print("🌲🌳🌊〰️🔥🚁🗲⚡🌩️⛈️🏥✚🏦🟩🟥🟧⬛🟦🟨🟪🟫🖤🤍💛💧🪣☁🌧️🏆")
 from map import Map
+from clouds import Clouds
 import time
 import os
 from helicopter import Helicopter as Helico
 from pynput import keyboard
 
 
-TICK_SLEEP = 0.05
+TICK_SLEEP = 0.1
 TREE_UPDATE = 50
+CLOUDS_UPDATE = 10
 FIRE_UPDATE = 100
 MAP_W, MAP_H = 20, 10
 
 
 
 field = Map(MAP_W, MAP_H)
-
-#field.print_map()
-
+clouds = Clouds(MAP_W, MAP_H)
 helico = Helico(MAP_W, MAP_H)
 
 
@@ -39,7 +39,7 @@ while True:
     os.system("cls") #clean
     field.process_helicopter(helico)    
     helico.print_stats()
-    field.print_map(helico)
+    field.print_map(helico, clouds)
     print("TICK", tick)
 
     tick += 1
@@ -48,3 +48,5 @@ while True:
         field.generate_tree()
     if (tick % FIRE_UPDATE == 0):
         field.update_fires()
+    if (tick % CLOUDS_UPDATE == 0):
+        clouds.update()
