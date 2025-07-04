@@ -37,10 +37,10 @@ tick = 1
 
 while True:
     os.system("cls") #clean
-    print("TICK", tick)
     field.process_helicopter(helico)    
     helico.print_stats()
     field.print_map(helico)
+    print("TICK", tick)
 
     tick += 1
     time.sleep(TICK_SLEEP)

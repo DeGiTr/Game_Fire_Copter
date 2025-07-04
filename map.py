@@ -7,8 +7,9 @@
 # 5 - огонь
 
 CELL_TYPES = "🟨🌲🌊🏥🏦🔥"
+
 TREE_BONUS = 100
-UPGRADE_COST = 200
+UPGRADE_COST = 5000
 
 class Map:
     def __init__(self, w, h):
@@ -62,7 +63,12 @@ class Map:
         if self.cells[cx][cy] == 0:
             self.cells[cx][cy] = 1
      
-    def generate_upgrade_shop(self):
+    def generate_upgrade_shop(self): # Генератор апгрейд-шопа
+        c = randcell(self.w, self.h)
+        cx, cy = c[0], c[1]
+        self.cells[cx][cy] = 4
+
+    def generate_hospital(self): # Генератор госпиталя
         c = randcell(self.w, self.h)
         cx, cy = c[0], c[1]
         self.cells[cx][cy] = 4
