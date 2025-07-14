@@ -25,7 +25,7 @@ class Helicopter:
     def print_stats(self):
         print("💧", self.tank, "/", self.mxtank, sep="", end = " | ")
         print("🏆", self.score, end = " | ")
-        print("🖤", self.lives)
+        print("💛", self.lives)
 
     def game_over(self):
         global helico

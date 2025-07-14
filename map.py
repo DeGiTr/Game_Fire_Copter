@@ -13,7 +13,7 @@ CELL_TYPES = "🟨🌲🌊🏥🏦🔥"
 TREE_BONUS = 100
 UPGRADE_COST = 5000
 
-LIFE_COST = 10000
+LIFE_COST = 1000
 
 class Map:
     def __init__(self, w, h):
@@ -26,16 +26,15 @@ class Map:
         self.generate_upgrade_shop()
         self.generate_hospital()
 
-
     def check_bounds(self, x, y):
         if (x < 0 or y < 0 or x >= self.h or y >= self.w):
             return False
         return True
 
     def print_map(self, helico, clouds): # Генератор игрового поля
-        print("⬛" * (self.w + 2))
+        print("◼️" * (self.w + 2))
         for ri in range(self.h):
-            print("⬛", end="")
+            print("◼️", end="")
             for ci in range(self.w):
                 cell = self.cells[ri][ci]
                 if (clouds.cells[ri][ci] == 1):
@@ -46,8 +45,8 @@ class Map:
                     print("🚁", end="")
                 elif (cell >= 0 and cell < len(CELL_TYPES)):
                     print(CELL_TYPES[cell], end="")
-            print("⬛")
-        print("⬛" * (self.w + 2))
+            print("◼️")
+        print("◼️" * (self.w + 2))
 
     def generate_river(self, l): # Генератор рек
         rc = randcell(self.w, self.h)
@@ -92,12 +91,15 @@ class Map:
         if self.cells[cx][cy] == 1:
             self.cells[cx][cy] = 5
 
-    def update_fires(self): # Удаление пожара и добавление нового
+    def update_fires(self, helico): # Удаление пожара и добавление нового
         for ri in range(self.h):
             for ci in range(self.w):
                 cell = self.cells[ri][ci]
                 if cell == 5:
                     self.cells[ri][ci] = 0
+                    helico.lives -= 1    # уменьшаем жизни за сгоревшее дерево
+                    if helico.lives <= 0:
+                        helico.game_over()
         for i in range(10):
             self.add_fire()
 

@@ -1,6 +1,4 @@
-﻿
-from utils import randbool
-
+﻿from utils import randbool
 
 class Clouds:
     def __init__(self, w, h):

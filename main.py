@@ -1,4 +1,5 @@
-﻿# print("🌲🌳🌊〰️🔥🚁🗲⚡🌩️⛈️🏥✚🏦🟩🟥🟧⬛🟦🟨🟪🟫🖤🤍💛💧🪣☁🌧️🏆")
+﻿# 🌲🌳🌊〰️🔥🚁🗲⚡🌩️⛈️🏥✚🏦🟩🟥🟧⬛🟦🟨🟪🟫🖤🤍💛💧🪣☁🌧️🏆◼️
+
 from map import Map
 from clouds import Clouds
 import time
@@ -7,21 +8,17 @@ import json
 from helicopter import Helicopter as Helico
 from pynput import keyboard
 
-
 TICK_SLEEP = 0.05
 TREE_UPDATE = 50
 CLOUDS_UPDATE = 100
 FIRE_UPDATE = 75
 MAP_W, MAP_H = 20, 10
 
-
-
 field = Map(MAP_W, MAP_H)
 clouds = Clouds(MAP_W, MAP_H)
 helico = Helico(MAP_W, MAP_H)
-tick = 1   
-      
-
+tick = 1
+   
 # Реализация управления с клавиатуры
 MOVES = {'w': (-1, 0), 'd': (0, 1), 's': (1, 0), 'a': (0, -1)}
 def process_key(key):
@@ -49,8 +46,6 @@ listener = keyboard.Listener(
     on_release=process_key)
 listener.start()
 
-
-
 while True:
     os.system("cls") #clean
     field.process_helicopter(helico, clouds)    
@@ -63,6 +58,6 @@ while True:
     if (tick % TREE_UPDATE == 0):
         field.generate_tree()
     if (tick % FIRE_UPDATE == 0):
-        field.update_fires()
+        field.update_fires(helico)
     if (tick % CLOUDS_UPDATE == 0):
         clouds.update()
